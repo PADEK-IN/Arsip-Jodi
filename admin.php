@@ -72,6 +72,9 @@
                 case 'gsk':
                     include "galeri_sk.php";
                     break;
+                case 'template':
+                    include "template_surat.php";
+                    break;
             }
         } else {
     ?>

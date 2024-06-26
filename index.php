@@ -221,15 +221,15 @@
                                     $_SESSION['nip'] = $nip;
                                     $_SESSION['admin'] = $admin;
 
-                                    //pengarahan berdasarkan role
-                                    if ($admin == 1) {
-                                        header("Location: ./admin.php");
-                                    } elseif ($admin == 3) {
-                                        header("Location: ./admin.php");
-                                    } else{
-                                        header("Location: ./user");
-                                    } 
-                                    // header("Location: ./admin.php");
+                                    // //pengarahan berdasarkan role
+                                    // if ($admin == 1) {
+                                    //     header("Location: ./admin.php");
+                                    // } elseif ($admin == 3) {
+                                    //     header("Location: ./admin.php");
+                                    // } else{
+                                    //     header("Location: ./user");
+                                    // } 
+                                    header("Location: ./admin.php");
                                     die();
                                 } else {
 

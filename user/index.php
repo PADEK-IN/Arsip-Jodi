@@ -16,7 +16,7 @@
     <body class="bg">
         <header>
             <?php 
-                include($_SERVER['DOCUMENT_ROOT'] .'/include/menu.php'); 
+                include($_SERVER['DOCUMENT_ROOT'] .'/user/components/menu.php'); 
             ?>
         </header>
         <main>
@@ -62,7 +62,7 @@
                 <div class="row">
 
                     <!-- Include Header Instansi START -->
-                    <?php include($_SERVER['DOCUMENT_ROOT'] . '/include/header_instansi.php'); ?>
+                    <?php include($_SERVER['DOCUMENT_ROOT'] . '/user/components/header_instansi.php'); ?>
                     <!-- Include Header Instansi END -->
 
                     <!-- Welcome Message START -->

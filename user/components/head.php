@@ -16,20 +16,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <?php
-      $query = mysqli_query($config, "SELECT logo from tbl_instansi");
-      list($logo) = mysqli_fetch_array($query);
-       echo `<link rel="shortcut icon" href="../../upload/'.$logo.'">`;
+        $query = mysqli_query($config, "SELECT logo from tbl_instansi");
+        while($data = mysqli_fetch_array($query)){
+            echo '<link rel="shortcut icon" href="../upload/'.$data['logo'].'">';
+        }
     ?>
-    <!-- Meta END -->
-
-    <!--[if lt IE 9]>
-    <script src="../asset/js/html5shiv.min.js"></script>
-    <![endif]-->
-
     <!-- Global style START -->
-
-    <link type="text/css" rel="stylesheet" href="../../asset/css/materialize.min.css">
-    <link type="text/css" rel="stylesheet" href="../../asset/css/jquery-ui.css">
+    <link type="text/css" rel="stylesheet" href="../asset/css/materialize.min.css">
+    <link type="text/css" rel="stylesheet" href="../asset/css/jquery-ui.css">
     <style type="text/css">
         body {
             background: #fff;
