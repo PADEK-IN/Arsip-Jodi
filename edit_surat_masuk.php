@@ -10,8 +10,8 @@ if (empty($_SESSION['admin'])) {
     $id_user = $_SESSION['id_user'];
 
     // Debugging output
-    echo "Admin role: " . $admin . "<br>";
-    echo "ID user from session: " . $id_user . "<br>";
+    // echo "Admin role: " . $admin . "<br>";
+    // echo "ID user from session: " . $id_user . "<br>";
 
     if (isset($_REQUEST['submit'])) {
         // Validate empty form
@@ -120,7 +120,7 @@ if (empty($_SESSION['admin'])) {
         $row = mysqli_fetch_array($query);
 
         // Debugging output
-        echo "ID user from database: " . $row['id_user'] . "<br>";
+        // echo "ID user from database: " . $row['id_user'] . "<br>";
 
         // Access control based on role
         if (($admin == 2 || $admin == 3) && $id_user != $row['id_user']) {
