@@ -113,7 +113,7 @@
                 <li><div class="grs"></></li>
                 <li><a href="./"><i class="material-icons"></i>&nbsp; Beranda</a></li>
                 <li>
-                    <a href="?page=tsm">Surat Masuk</a></li>
+                    <a href="?page=tsm">Transaksi Surat</a></li>
                 </li>
                 <li>
                     <a href="?page=template">Template Surat</a></li>

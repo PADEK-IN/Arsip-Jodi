@@ -39,9 +39,8 @@
                 $curr = ($pg - 1) * $limit;
             }?>
 
-            <!-- Row Start -->
+            <!-- Title Start -->
             <div class="row">
-                <!-- Secondary Nav START -->
                 <div class="col s12">
                     <div class="z-depth-1">
                         <nav class="secondary-nav">
@@ -67,9 +66,8 @@
                         </nav>
                     </div>
                 </div>
-                <!-- Secondary Nav END -->
             </div>
-            <!-- Row END -->
+            <!-- Title End -->
 
             <?php
                 if(isset($_SESSION['succAdd'])){
@@ -115,9 +113,8 @@
 
             <!-- Row form Start -->
             <div class="row jarak-form">
-
-            <?php
-                if(isset($_REQUEST['submit'])){
+            <?php if(isset($_REQUEST['submit'])){
+                // kayaknya ini untuk search
                 $cari = mysqli_real_escape_string($config, $_REQUEST['cari']);
                     echo '
                     <div class="col s12" style="margin-top: -18px;">
@@ -127,65 +124,62 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col m12" id="colres">
                     <table class="bordered" id="tbl">
-                        <thead class="blue lighten-4" id="head">
-                            <tr>
-                                <th width="10%">No. Agenda<br/>Kode</th>
-                                <th width="30%">Isi Ringkas<br/> File</th>
-                                <th width="24%">Asal Surat</th>
-                                <th width="18%">No. Surat<br/>Tgl Surat</th>
-                                <th width="18%">Tindakan <span class="right"><i class="material-icons" style="color: #333;">settings</i></span></th>
-                            </tr>
-                        </thead>
-                        <tbody>';
+                    <thead class="blue lighten-4" id="head">
+                        <tr>
+                            <th width="10%">No. Agenda<br/>Kode</th>
+                            <th width="30%">Isi Ringkas<br/> File</th>
+                            <th width="24%">Asal Surat</th>
+                            <th width="18%">No. Surat<br/>Tgl Surat</th>
+                            <th width="18%">Tindakan <span class="right"><i class="material-icons" style="color: #333;">settings</i></span></th>
+                        </tr>
+                    </thead>
+                    <tbody>';
 
-                        //script untuk mencari data
-                        $query = mysqli_query($config, "SELECT * FROM tbl_surat_masuk WHERE isi LIKE '%$cari%' ORDER by id_surat DESC LIMIT 15");
-                        if(mysqli_num_rows($query) > 0){
-                            $no = 1;
-                            while($row = mysqli_fetch_array($query)){
-                              echo '
-                              <tr>
-                                <td>'.$row['no_agenda'].'<br/><hr/>'.$row['kode'].'</td>
-                                <td>'.substr($row['isi'],0,200).'<br/><br/><strong>File :</strong>';
+                    //script untuk mencari data
+                    $query = mysqli_query($config, "SELECT * FROM tbl_surat_masuk WHERE isi LIKE '%$cari%' ORDER by id_surat DESC LIMIT 15");
+                    if(mysqli_num_rows($query) > 0){
+                        $no = 1;
+                        while($row = mysqli_fetch_array($query)){
+                        echo '
+                        <tr>
+                            <td>'.$row['no_agenda'].'<br/><hr/>'.$row['kode'].'</td>
 
-                                if(!empty($row['file'])){
-                                    echo ' <strong><a href="?page=gsm&act=fsm&id_surat='.$row['id_surat'].'">'.$row['file'].'</a></strong>';
-                                } else {
-                                    echo '<em>Tidak ada file yang di upload</em>';
-                                } echo '</td>
-                                <td>'.$row['asal_surat'].'</td>
-                                <td>'.$row['no_surat'].'<br/><hr/>'.indoDate($row['tgl_surat']).'</td>
-                                <td>';
+                            <td>'.substr($row['isi'],0,200).'<br/><br/><strong>File :</strong>';
+                            if(!empty($row['file'])){
+                                echo ' <strong><a href="?page=gsm&act=fsm&id_surat='.$row['id_surat'].'">'.$row['file'].'</a></strong>';
+                            } else {
+                                echo '<em>Tidak ada file yang di upload</em>';
+                            } echo '</td>
 
-                                if($_SESSION['id_user'] != $row['id_user'] AND $_SESSION['id_user'] != 1){
-                                    echo '<a class="btn small yellow darken-3 waves-effect waves-light" href="?page=ctk&id_surat='.$row['id_surat'].'" target="_blank">
-                                        <i class="material-icons">print</i> PRINT</a>';
-                                } else {
-                                  echo '<a class="btn small blue waves-effect waves-light" href="?page=tsm&act=edit&id_surat='.$row['id_surat'].'">
-                                            <i class="material-icons">edit</i> EDIT</a>
-                                        <a class="btn small light-green waves-effect waves-light tooltipped" data-position="left" data-tooltip="Pilih Disp untuk menambahkan Disposisi Surat" href="?page=tsm&act=disp&id_surat='.$row['id_surat'].'">
-                                            <i class="material-icons">description</i> DISP</a>
-                                        <a class="btn small yellow darken-3 waves-effect waves-light" href="?page=ctk&id_surat='.$row['id_surat'].'" target="_blank">
-                                            <i class="material-icons">print</i> PRINT</a>
-                                        <a class="btn small deep-orange waves-effect waves-light" href="?page=tsm&act=del&id_surat='.$row['id_surat'].'">
-                                            <i class="material-icons">delete</i> DEL</a>';
-                                } echo '
-                                    </td>
-                                </tr>';
-                            }
-                        } else {
-                            echo '<tr><td colspan="5"><center><p class="add">Tidak ada data yang ditemukan</p></center></td></tr>';
+                            <td>'.$row['asal_surat'].'</td>
+                            <td>'.$row['no_surat'].'<br/><hr/>'.indoDate($row['tgl_surat']).'</td>
+
+                            <td>';
+                            if($_SESSION['id_user'] != $row['id_user'] AND $_SESSION['id_user'] != 1){
+                                echo '<a class="btn small yellow darken-3 waves-effect waves-light" href="?page=ctk&id_surat='.$row['id_surat'].'" target="_blank">
+                                    <i class="material-icons">print</i> PRINT</a>';
+                            } else {
+                                echo '<a class="btn small blue waves-effect waves-light" href="?page=tsm&act=edit&id_surat='.$row['id_surat'].'">
+                                        <i class="material-icons">edit</i> EDIT</a>
+                                    <a class="btn small light-green waves-effect waves-light tooltipped" data-position="left" data-tooltip="Pilih Disp untuk menambahkan Disposisi Surat" href="?page=tsm&act=disp&id_surat='.$row['id_surat'].'">
+                                        <i class="material-icons">description</i> DISP</a>
+                                    <a class="btn small yellow darken-3 waves-effect waves-light" href="?page=ctk&id_surat='.$row['id_surat'].'" target="_blank">
+                                        <i class="material-icons">print</i> PRINT</a>
+                                    <a class="btn small deep-orange waves-effect waves-light" href="?page=tsm&act=del&id_surat='.$row['id_surat'].'">
+                                        <i class="material-icons">delete</i> DEL</a>';
+                            } echo '</td>
+                        </tr>';
                         }
-                         echo '</tbody></table><br/><br/>
+                    } else {
+                        echo '<tr><td colspan="5"><center><p class="add">Tidak ada data yang ditemukan</p></center></td></tr>';
+                    }
+                        echo '</tbody></table><br/><br/>
                     </div>
-                </div>
-                <!-- Row form END -->';
-
+                </div>';
+                // ini untuk tabel
                 } else {
-
                     echo '
                     <div class="col m12" id="colres">
                         <table class="bordered" id="tbl">
@@ -244,14 +238,13 @@
                                 </tr>
                             </thead>
                             <tbody>';
-
-                            //script untuk menampilkan data
-                            $query = mysqli_query($config, "SELECT * FROM tbl_surat_masuk ORDER by id_surat DESC LIMIT $curr, $limit");
-                            if(mysqli_num_rows($query) > 0){
-                                $no = 1;
-                                while($row = mysqli_fetch_array($query)){
-                                  echo '
-                                  <tr>
+                    $query = mysqli_query($config, "SELECT * FROM tbl_surat_masuk ORDER by id_surat DESC LIMIT $curr, $limit");
+                    if(mysqli_num_rows($query) > 0){
+                        $no = 1;
+                        while($row = mysqli_fetch_array($query)){
+                            if($_SESSION['admin'] == 1 || $_SESSION['admin'] == 3){ // keluarin semua data buat super admin dan admin
+                                echo '
+                                <tr>
                                     <td>'.$row['no_agenda'].'<br/><hr/>'.$row['kode'].'</td>
                                     <td>'.substr($row['isi'],0,200).'<br/><br/><strong>File :</strong>';
 
@@ -261,39 +254,71 @@
                                         echo '<em>Tidak ada file yang di upload</em>';
                                     } echo '</td>
                                     <td>'.$row['asal_surat'].'</td>
-                                    <td>'.$row['no_surat'].'<br/><hr/>'.indoDate($row['tgl_surat']).'</td>
-                                    <td>';
-
+                                    <td>'.$row['no_surat'].'<br/><hr/>'.indoDate($row['tgl_surat']).'</td>';
                                     if($_SESSION['id_user'] != $row['id_user'] AND $_SESSION['id_user'] != 1){
-                                        echo '<a class="btn small yellow darken-3 waves-effect waves-light" href="?page=ctk&id_surat='.$row['id_surat'].'" target="_blank">
-                                            <i class="material-icons">print</i> PRINT</a>';
-                                    } else {
-                                      echo '<a class="btn small blue waves-effect waves-light" href="?page=tsm&act=edit&id_surat='.$row['id_surat'].'">
-                                                <i class="material-icons">edit</i> EDIT</a>
-                                            <a class="btn small light-green waves-effect waves-light tooltipped" data-position="left" data-tooltip="Pilih Disp untuk menambahkan Disposisi Surat" href="?page=tsm&act=disp&id_surat='.$row['id_surat'].'">
-                                                <i class="material-icons">description</i> DISP</a>
+                                        echo '
+                                        <td>
                                             <a class="btn small yellow darken-3 waves-effect waves-light" href="?page=ctk&id_surat='.$row['id_surat'].'" target="_blank">
-                                                <i class="material-icons">print</i> PRINT</a>
+                                            <i class="material-icons">print</i> PRINT</a>
+                                        </td>
+                                        ';
+                                        } else {
+                                        echo '
+                                        <td>
+                                            <a class="btn small blue waves-effect waves-light" href="?page=tsm&act=edit&id_surat='.$row['id_surat'].'">
+                                            <i class="material-icons">edit</i> EDIT</a>
+                                            <a class="btn small light-green waves-effect waves-light tooltipped" data-position="left" data-tooltip="Pilih Disp untuk menambahkan Disposisi Surat" href="?page=tsm&act=disp&id_surat='.$row['id_surat'].'">
+                                            <i class="material-icons">description</i> DISP</a>
+                                            <a class="btn small yellow darken-3 waves-effect waves-light" href="?page=ctk&id_surat='.$row['id_surat'].'" target="_blank">
+                                            <i class="material-icons">print</i> PRINT</a>
                                             <a class="btn small deep-orange waves-effect waves-light" href="?page=tsm&act=del&id_surat='.$row['id_surat'].'">
-                                                <i class="material-icons">delete</i> DEL</a>';
-                                    } echo '
-                                    </td>
-                                </tr>';
+                                            <i class="material-icons">delete</i> DEL</a>
+                                        </td>
+                                        ';
+                                    }
+                                echo '</tr>';
+                            } else { // data buat user
+                                if($row['id_user'] === $_SESSION['id_user']){ // tampilan ketika ada berkas punya user
+                                    echo '
+                                    <tr>
+                                        <td>'.$row['no_agenda'].'<br/><hr/>'.$row['kode'].'</td>
+                                        <td>'.substr($row['isi'],0,200).'<br/><br/><strong>File :</strong>';
+                                        if(!empty($row['file'])){
+                                            echo ' <strong><a href="?page=gsm&act=fsm&id_surat='.$row['id_surat'].'">'.$row['file'].'</a></strong>';
+                                        } else {
+                                            echo '<em>Tidak ada file yang di upload</em>';
+                                        } echo '</td>
+                                        <td>'.$row['asal_surat'].'</td>
+                                        <td>'.$row['no_surat'].'<br/><hr/>'.indoDate($row['tgl_surat']).'</td>
+                                        <td>
+                                            <a class="btn small blue waves-effect waves-light" href="?page=tsm&act=edit&id_surat='.$row['id_surat'].'">
+                                            <i class="material-icons">edit</i> EDIT</a>
+                                            <a class="btn small deep-orange waves-effect waves-light" href="?page=tsm&act=del&id_surat='.$row['id_surat'].'">
+                                            <i class="material-icons">delete</i> DEL</a>
+                                        </td>
+                                    </tr>
+                                    ';
+                                } else { // tampilan ketika tidak ada berkas punya user
+                                    echo '
+                                    <tr>
+                                        <td colspan="5">
+                                            <center><p class="add">Tidak ada data untuk ditampilkan. <u><a href="?page=tsm&act=add">Tambah data baru</a></u></p></center>
+                                        </td>
+                                    </tr>
+                                    ';
+                                }
                             }
-                        } else {
-                            echo '<tr><td colspan="5"><center><p class="add">Tidak ada data untuk ditampilkan. <u><a href="?page=tsm&act=add">Tambah data baru</a></u></p></center></td></tr>';
                         }
-                      echo '</tbody></table>
+                    } else {
+                        echo '<tr><td colspan="5"><center><p class="add">Tidak ada data untuk ditampilkan. <u><a href="?page=tsm&act=add">Tambah data baru</a></u></p></center></td></tr>';
+                    }
+                    echo '</tbody></table>
                     </div>
-                </div>
-                <!-- Row form END -->';
-
+                </div>';
                 $query = mysqli_query($config, "SELECT * FROM tbl_surat_masuk");
                 $cdata = mysqli_num_rows($query);
                 $cpg = ceil($cdata/$limit);
-
-                echo '<br/><!-- Pagination START -->
-                      <ul class="pagination">';
+                echo '<br/> <ul class="pagination">';
 
                 if($cdata > $limit ){
 
