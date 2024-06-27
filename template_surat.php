@@ -5,10 +5,9 @@ if (empty($_SESSION['admin'])) {
     die();
 } else {
     // Path ke folder template
-    // include($_SERVER['DOCUMENT_ROOT'] .'/');
     $templateFolder = './template/';
 
-    // Mendapatkan daftar file dalam folder
+    // Ambil daftar file dalam folder template
     $files = scandir($templateFolder);
 
     // Inisialisasi nomor urut
@@ -35,9 +34,9 @@ if (empty($_SESSION['admin'])) {
     <table class="bordered" id="tbl">
         <thead class="blue lighten-4" id="head">
             <tr>
-                <th width="15%">No.</th>
-                <th width="30%">Nama Template</th>
-                <th width="24%">File</th>
+                <th width="10%">No.</th>
+                <th width="40%">Nama Template</th>
+                <th width="20%">Type</th>
                 <th width="18%">Tindakan</th>
             </tr>
         </thead>
@@ -51,19 +50,47 @@ if (empty($_SESSION['admin'])) {
                 // Ambil ekstensi file
                 $fileExt = pathinfo($file, PATHINFO_EXTENSION);
 
-                // Cek apakah file adalah file Word atau Excel
-                if ($fileExt == 'doc' || $fileExt == 'docx' || $fileExt == 'xls' || $fileExt == 'xlsx') {
-                    ?>
-                    <tr>
-                        <td><?php echo $no++; ?></td>
-                        <td><?php echo basename($file); ?></td>
-                        <td><?php echo $file; ?></td>
-                        <td>
-                            <a class="btn small light-green waves-effect waves-light tooltipped" data-position="left" data-tooltip="Pilih Download untuk mendownload Template Surat" href="<?php echo $templateFolder . $file; ?>" download><i class="material-icons">description</i> DOWNLOAD</a>
-                        </td>
-                    </tr>
-            <?php
+                // Inisialisasi variabel nama template
+                $nama_template = basename($file);
+
+                // Mengganti karakter '-' dan '_' dengan spasi ' ' dalam nama template
+                $nama_template = str_replace(['-', '_'], ' ', $nama_template);
+
+                // Inisialisasi variabel tipe file
+                $tipe_file = '';
+
+                // Menentukan tipe file berdasarkan ekstensinya
+                switch ($fileExt) {
+                    case 'doc':
+                    case 'docx':
+                        $tipe_file = 'Microsoft Word';
+                        break;
+                    case 'xls':
+                    case 'xlsx':
+                        $tipe_file = 'Microsoft Excel';
+                        break;
+                    case 'pdf':
+                        $tipe_file = 'PDF';
+                        break;
+                    default:
+                        $tipe_file = 'Tidak diketahui';
+                        break;
                 }
+                ?>
+                <tr>
+                    <td><?php echo $no++; ?></td>
+                    <td>
+                        <strong>
+                            <a>
+                                <?php echo pathinfo($nama_template, PATHINFO_FILENAME); ?></td>
+                            </a>
+                        </strong>
+                    <td><?php echo $tipe_file; ?></td>
+                    <td>
+                        <a class="btn small light-green waves-effect waves-light tooltipped" data-position="left" data-tooltip="Pilih Download untuk mendownload Template Surat" href="<?php echo $templateFolder . $file; ?>" download><i class="material-icons">description</i> DOWNLOAD</a>
+                    </td>
+                </tr>
+            <?php
             }
             ?>
         </tbody>
