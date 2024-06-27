@@ -278,7 +278,7 @@
                                     }
                                 echo '</tr>';
                             } else { // data buat user
-                                if($row['id_user'] === $_SESSION['id_user']){ // tampilan ketika ada berkas punya user
+                                if($row['id_user'] != $_SESSION['id_user']){ // tampilan ketika ada berkas punya user
                                     echo '
                                     <tr>
                                         <td>'.$row['no_agenda'].'<br/><hr/>'.$row['kode'].'</td>
