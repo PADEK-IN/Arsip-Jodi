@@ -75,6 +75,9 @@
                 case 'template':
                     include "template_surat.php";
                     break;
+                case 'tsk_user':
+                    include "transaksi_surat_keluar_user.php";
+                    break;
             }
         } else {
     ?>
